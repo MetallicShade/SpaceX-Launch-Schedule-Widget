@@ -1,9 +1,9 @@
-const url="https://spacelaunchschedule.com/spacex-launch-schedule/"
+const url="https://ll.thespacedevs.com/2.0.0/swagger?format=openapi"
 const req=new Request(url)
-var data=await req.loadString()
-var rocket=data.substring(data.indexOf("<h4 class=\"card-title h5\"")+97,data.indexOf("</h4>")-1)
-var date=data.substring(data.indexOf("<time datetime=\"")+16,data.indexOf("\">"),data.indexOf("<time datetime=\"")+16)
-var location=data.substring(data.indexOf("<div class=\"col truncate")+27,data.indexOf("</div>",data.indexOf("<div class=\"col truncate")+27))
+var data=await req.loadJSON()
+var rocket=""
+var date=""
+var location=""
 const widget = await createWidget()
 Script.setWidget(widget)
 Script.complete()
