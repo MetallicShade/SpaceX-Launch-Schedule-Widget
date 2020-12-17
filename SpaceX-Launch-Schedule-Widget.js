@@ -10,4 +10,8 @@ Script.complete()
 async function createWidget() {
   const w=new ListWidget()
   w.backgroundcolor="#000000"
+  w.addDate()
+  w.date=new Date(2020,12,16,22,10,0,0)
+  w.applyTimerStyle()
+  return w
 }
