@@ -25,10 +25,10 @@ async function createWidget() {
   date.addText("date")
   let location - widget.addStack()
   location.addText("location")
-  widget.addDate()
-  let date=new Date(2020,11,18,0,0,0,0)
-  let countDown=widget.addDate(date)
-  countDown.applyTimerStyle()
+  //w.addDate()
+  //let date=new Date(2020,12,16,22,10,0,0)
+  //let countDown=w.addDate(date)
+  //countDown.applyTimerStyle()
   return w
 =======
   widget.backgroundcolor="#000000"
