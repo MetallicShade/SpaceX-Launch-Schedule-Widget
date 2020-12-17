@@ -14,23 +14,26 @@ async function createWidget() {
   let widget=new ListWidget()
   widget.backgroundcolor=Color.black()
   let testDate=new Date(2020,11,18,0,0,0,0)
-  addItem(widget,"rocket",null)
-  addItem(widget,"date","calendar")
-  addItem(widget,"location","mappin.and.ellipse")
-  addItem(widget,null,"timer")
+  addItem(widget,rocket,null,false)
+  addItem(widget,date.toLocaleString(),"calendar",false)
+  addItem(widget,location,"mappin.and.ellipse",false)
+  addItem(widget,date,"timer",true)
   let timer = widget.addStack()
   timer.addImage(fm.readImage(scriptablePath+"timer.PNG"))
   let countDown=timer.addDate(testDate)
   countDown.applyTimerStyle()
   return widget
 }
-function addItem(widget, text, symbol) {
+function addItem(widget, text, symbol, timer) {
   let item=widget.addStack()
   if (symbol!=null) {
     let icn=item.addImage(SFSymbol.named(symbol).image)
     icn.tintColor=Color.white()
   }
-  if (text!=null){
+  if (timer=true) {
+    let countDown=item.addDate(text)
+  }
+  else if (text!=null) {
     item.addText(text)
   }
 }
