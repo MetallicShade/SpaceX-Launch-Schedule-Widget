@@ -1,17 +1,38 @@
-const url="https://spacelaunchschedule.com/spacex-launch-schedule/"
-const req=new Request(url)
-var data=await req.loadString()
-var rocket=data.substring(data.indexOf("<h4 class=\"card-title h5\"")+97,data.indexOf("</h4>")-1)
-var date=data.substring(data.indexOf("<time datetime=\"")+16,data.indexOf("\">"),data.indexOf("<time datetime=\"")+16)
-var location=data.substring(data.indexOf("<div class=\"col truncate")+27,data.indexOf("</div>",data.indexOf("<div class=\"col truncate")+27))
+const url = "https://ll.thespacedevs.com/2.0.0/launch/upcoming/?mode=list&search=SpaceX"
+const req = new Request(url)
+let api = await req.loadJSON()
+var rocket = api.results[0].name
+var date = new Date(api.results[0].net).toLocaleString()
+var location = api.results[0].location
 const widget = await createWidget()
 Script.setWidget(widget)
 Script.complete()
 async function createWidget() {
-  const w=new ListWidget()
-  w.backgroundcolor="#000000"
-  w.addDate()
-  w.date=new Date(2020,12,16,22,10,0,0)
-  w.applyTimerStyle()
-  return w
+  let widget = new ListWidget()
+  widget.backgroundcolor = Color.black()
+  widget.spacing = 8
+  addItem(widget, rocket, null, false)
+  addItem(widget, date, "calendar", false)
+  addItem(widget, location, "mappin.and.ellipse", false)
+  addItem(widget, date, "timer", true)
+  return widget
+}
+
+function addItem(widget, text, symbol, timer) {
+  let item = widget.addStack()
+  if (symbol != null) {
+    let icn = item.addImage(SFSymbol.named(symbol).image)
+    icn.imageSize = new Size(22, 22)
+    icn.tintColor = Color.white()
+    item.addSpacer()
+  }
+  if (timer == true) {
+    let countDown = item.addDate(new Date(text))
+    countDown.applyTimerStyle()
+    countDown.rightAlignText()
+    countDown.font = Font.mediumSystemFont(10)
+  } else if (text != null) {
+    let t = item.addText(text)
+    t.font = Font.mediumSystemFont(10)
+  }
 }
